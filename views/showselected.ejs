@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Selected Student</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="custom.css">
+  <style type="text/css">
+    form .input-field:first-child {
+    margin-bottom: 0rem;
+}
+
+    select{
+border: 1px solid lightgray;
+   min-height: 5vh;
+   border-radius: 5px;
+   
+   outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+  
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+      $http.get('/displayselected')
+        .then(function(response) {
+          $scope.users = response.data;
+        });
+    });
+  </script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+  <li><a href="/tpodisplayquery"><span class="fa fa-question"></span>View Queries</a></li>
+  <li><a href="/tpodocuments"><span class="fa fa-file-text"></span>View Student Documents</a></li>
+  <li><a href="/tpoaddnotification"><span class="fa fa-paper-plane"></span>Send Notifications</a></li>
+  <li><a href="tpoaddselected"><span class="fa fa-user-plus"></span>Add Selected Student</a></li>
+  <li><a href="/tpoaddpc"><span class="fa fa-users"></span>Add Coordinator</a></li>
+  <li><a href="/tpoaddcompany"><span class="fa fa-university"></span>Add Company details</a></li>
+  <li><a href="/tpodisplaycompany"><span class="fa fa-building"></span>View Company Details</a></li>
+  <li><a href="/tpologout"><span class="fa fa-sign-out"></span>Logout</a></li>
+  </ul>
+<!-- partial -->
+  
+
+  <main class="container" style="min-width: 380px;min-height: 30vh;">
+        <h2 style="margin-bottom: 0rem;">Add Selected Student</h2>
+        
+        <form action="/tpoaddselected" method="post" ng-controller="myCtrl">
+            
+            <div class="input-field" style="margin-top:20px;">
+             <label for="branch">Select Student:</label><br>
+<select id="username" name="username" required>
+  <option value="" disabled selected>-- Select Student --</option>
+  
+  <% data1.forEach(data1 => { %>
+  
+     <option value="<%= data1.username %>"><%= data1.username %></option>
+  <% }); %>
+</select>
+
+</div>
+
+<div class="input-field" style="margin-top:20px;">
+             <label for="branch">Select Posting:</label><br>
+<select id="posting" name="posting" required>
+  <option value="" disabled selected>-- Select Posting --</option>
+  < <% data2.forEach(data2 => { %>
+  
+    <option value="<%= data2._id %>"><%= data2.companyname %> (<%= data2.jobrole %>)</option>
+ <% }); %>
+</select>
+
+</div>
+            
+            
+            <input type="submit" value="Add Selected Student" style="margin-top:20px;">
+        </form>
+
+       
+    </main>
+</body>
+</html>

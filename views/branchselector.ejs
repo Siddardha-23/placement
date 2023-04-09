@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>branch selection</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="custom.css">
+  <style type="text/css">
+    select{
+border: 1px solid lightgray;
+   min-height: 5vh;
+   border-radius: 5px;
+
+   outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+  </style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+  <li><a href="/viewnotifications"><span class="fa fa-envelope"></span>View Notifications</a></li>
+  <li><a href="/viewstudentprofile"><span class="fa fa-user"></span>View Profile</a></li>
+  <li><a href="/editstudentprofile"><span class="fa fa-pencil"></span>Edit Profile</a></li>
+  <li><a href="/studentcp"><span class="fa fa-key"></span>Change Password</a></li>
+  <li><a href="/studentaq"><span class="fa fa-plus"></span>Add Query</a></li>
+  <li><a href="/queryresponse"><span class="fa fa-reply"></span>Query Response</a></li>
+  <li><a href="/selectedstudents"><span class="fa fa-check-circle"></span>View Selected Students</a></li>
+  <li><a href="/viewcompanies"><span class="fa fa-building"></span>View Company Details</a></li>
+  <li><a href="/logout"><span class="fa fa-sign-out"></span>Logout</a></li>
+  </ul>
+<!-- partial -->
+  
+
+  <main class="container" style="min-width: 380px;min-height: 20vh;">
+        <h2>Branch Wise Selected Students</h2>
+        <form action="/displayselected" method="post">
+            <div class="input-field">
+             <label for="branch">Select a department:</label><br>
+<select id="branch" name="branch" required>
+  <option value="" disabled selected>-- Select your branch --</option>
+  <option value="CSE">Computer Science and Engineering (CSE)</option>
+  <option value="ECE">Electronics and Communication Engineering (ECE)</option>
+  <option value="EEE">Electrical and Electronics Engineering (EEE)</option>
+  <option value="MECH">Mechanical Engineering (MECH)</option>
+  <option value="CIVIL">Civil Engineering (CIVIL)</option>
+  <option value="PET">Petroleum Engineering (PET)</option>
+  <option value="CHEM">Petrochemical Engineering (CHEM)</option>
+</select>
+
+</div>
+            
+            
+            <input type="submit" value="Show Selected Students">
+        </form>
+
+       
+    </main>
+</body>
+</html>

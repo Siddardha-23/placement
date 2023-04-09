@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Report</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="custom.css">
+  <link rel="stylesheet" href="thisstyle.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style type="text/css">
+    h2{
+        font-weight: 600;
+   
+    }
+    table th {
+  background-color: #d0def2;
+  padding: 0.75rem 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+table td {
+  padding: 1rem 1rem;
+  word-break: break-word !important;
+  text-align: center;
+}
+table tr:nth-child(even) {
+  background-color: #f3f8fe;
+}
+  </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script>
+  var app = angular.module('myApp', []);
+  app.controller('myCtrl', function($scope, $http) {
+    $http.get('/pcsr')
+      .then(function(response) {
+        $scope.users = response.data;
+      });
+  });
+</script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+<li><a href="/pcdisplayquery"><span class="fa fa-question"></span>View Queries</a></li>
+<li><a href="/pcverify"><span class="fa fa-file-text"></span>Verify Students</a></li>
+<li><a href="/pcreport"><span class="fa fa-users"></span>Student Report</a></li>
+<li><a href="/pcaddstudent"><span class="fa fa-user-plus"></span>Add Students</a></li>
+<li><a href="/pclogout"><span class="fa fa-sign-out"></span>Logout</a></li>
+</ul>
+<!-- partial -->
+  
+  
+  <table style="width: 100%;">
+    <caption style="text-align: left;"><h2>Students Report</h2></caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>DOB</th>
+        <th>10th GPA</th>
+        <th>12th GPA</th>
+        <th>Resume</th>
+        <th>Offerletter</th>
+       
+        
+      </tr>
+    </thead>
+    <tbody ng-controller="myCtrl">
+     
+        <tr ng-repeat="user in users">
+          <td>{{user.name}}</td>
+          <td>{{user.username}} </td>
+          <td>{{user.email}}</td>
+          <td>{{user.phone}}</td>
+          <td>{{user.dob | date: 'shortDate'}}</td>
+          <td>{{user.gpa10}}</td>
+          <td>{{user.gpa12}}</td>
+          <td><a href="./uploads/{{ user.resume}}">View</a></td>
+          <td><a href="./uploads/{{user.offerletter}}">View</a></td>
+        </tr>
+      
+      
+   
+   
+    
+    </tbody>
+  </table>
+</body>
+</body>
+</html>

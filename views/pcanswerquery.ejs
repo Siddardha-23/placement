@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Query Response</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="custom.css">
+  <style type="text/css">
+    .input-field {
+        margin-top:20px;
+    }
+    .input-field input{
+        margin-top: 2px ;
+    }
+    form .input-field:first-child {
+    margin-bottom: 0rem;
+}
+
+    select{
+border: 1px solid lightgray;
+   min-height: 5vh;
+   border-radius: 5px;
+
+   outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+  
+  </style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+    <li><a href="/pcdisplayquery"><span class="fa fa-question"></span>View Queries</a></li>
+    <li><a href="/pcverify"><span class="fa fa-file-text"></span>Verify Students</a></li>
+    <li><a href="/pcreport"><span class="fa fa-users"></span>Student Report</a></li>
+    <li><a href="/pcaddstudent"><span class="fa fa-user-plus"></span>Add Students</a></li>
+    <li><a href="/pclogout"><span class="fa fa-sign-out"></span>Logout</a></li>
+    </ul>
+<!-- partial -->
+  
+
+  <main class="container" style="min-width: 380px;min-height: 30vh;">
+        <h2 style="margin-bottom: 0rem;">Response to Query</h2>
+        <form action="/pcanswerquery" method="post">
+            <input type="id" name="id" value="" hidden>
+            <div class="input-field">
+                <label>Username:</label>
+                <input type="text" name="username" id="username"
+                    placeholder="Enter Username" value="<%= username %>" minlength="1" required readonly>
+                <div class="underline"></div>
+            </div>
+            <div class="input-field">
+                <label>Subject:</label>
+                <input type="text" name="subject" id="subject"
+                    placeholder="Enter Subject" value="<%= subject %>" required readonly>
+                <div class="underline"></div>
+            </div>
+            <div class="input-field">
+                <label>Query:</label>
+                <input type="text" name="query" id="query"
+                    placeholder="Enter Query"  value="<%= query %>" required readonly>
+                <div class="underline"></div>
+            </div>
+            <div class="input-field">
+                <label>Response:</label>
+                <input type="text" name="answer" id="answer"
+                    placeholder="Enter Response" minlength="1" required>
+                <div class="underline"></div>
+            </div>
+            
+            
+            
+            
+            
+            <input type="submit" value="Submit Response" style="margin-top:20px;">
+        </form>
+
+       
+    </main>
+</body>
+</html>

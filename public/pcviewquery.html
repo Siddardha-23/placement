@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>view queries</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="custom.css">
+  <link rel="stylesheet" href="./thisstyle.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style type="text/css">
+    h2{
+        font-weight: 600;
+   
+    }
+  </style>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+   <script>
+     var app = angular.module('myApp', []);
+     app.controller('myCtrl', function($scope, $http) {
+       $http.get('/pcquerydisplay')
+         .then(function(response) {
+           $scope.users = response.data;
+         });
+     });
+   </script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+  <li><a href="/pcdisplayquery"><span class="fa fa-question"></span>View Queries</a></li>
+
+  <li><a href="/pcverify"><span class="fa fa-file-text"></span>Verify Students</a></li>
+  <li><a href="/pcreport"><span class="fa fa-users"></span>Student Report</a></li>
+  <li><a href="/pcaddstudent"><span class="fa fa-user-plus"></span>Add Students</a></li>
+  <li><a href="/filterquery"><span class="fa fa-user-plus"></span>Filter Student Data</a></li>
+  <li><a href="/pclogout"><span class="fa fa-sign-out"></span>Logout</a></li>
+  </ul>
+<!-- partial -->
+  
+  
+  <table style="width: 1000px;">
+    <caption style="text-align: left;"><h2>Notifications</h2></caption>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Subject</th>
+        <th>Query</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody ng-controller="myCtrl">
+       
+            <tr ng-repeat="user in users">
+              <td>{{ user.username }}</td>
+              <td>{{ user.subject }}</td>
+              <td>{{ user.query }}</td>
+              <td><form action="/pcanswerquery" method="get" ><input type="text" name="qid" id="qid" value="{{user._id}}" hidden>
+                <input type="submit" value="Reply"></form></td>
+            </tr>
+      
+      
+   
+   
+    
+    </tbody>
+  </table>
+</body>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>branch selection</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="custom.css">
+  <style type="text/css">
+    select{
+border: 1px solid lightgray;
+   min-height: 5vh;
+   border-radius: 5px;
+
+   outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+  </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script>
+  var app = angular.module('myApp', []);
+  app.controller('myCtrl', function($scope, $http) {
+    $http.get('/pcgetusers')
+      .then(function(response) {
+        $scope.users = response.data;
+      });
+  });
+</script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+  <li><a href="/pcdisplayquery"><span class="fa fa-question"></span>View Queries</a></li>
+  <li><a href="/pcverify"><span class="fa fa-file-text"></span>Verify Students</a></li>
+  <li><a href="/pcreport"><span class="fa fa-users"></span>Student Report</a></li>
+  <li><a href="/pcaddstudent"><span class="fa fa-user-plus"></span>Add Students</a></li>
+  <li><a href="/pclogout"><span class="fa fa-sign-out"></span>Logout</a></li>
+  </ul>
+<!-- partial -->
+  
+
+  <main class="container" style="min-width: 380px;min-height: 30vh;">
+        <h2>Verify Students</h2>
+        <form action="/pcshowdetails" method="get"  #userForm="ngForm" ng-controller="myCtrl">
+            <div class="input-field">
+             <label for="branch">Select Student:</label><br>
+<select id="username" name="username"  required>
+  <option value="" disabled selected>-- Select student to verify --</option>
+ 
+  
+    <option ng-repeat="user in users" value="{{user.username}}">{{user.username}}</option>
+
+
+</select>
+
+</div>
+            
+            
+            <input type="submit" value="Show Student Details">
+        </form>
+
+       
+    </main>
+</body>
+</html>

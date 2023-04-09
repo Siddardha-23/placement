@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>view queries</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="custom.css">
+  <link rel="stylesheet" href="./thisstyle.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style type="text/css">
+    h2{
+        font-weight: 600;
+   
+    }
+    filter-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    filter-options select {
+        margin-right: 10px;
+    }
+
+    filter-btn {
+      cursor: pointer;
+      /* transition: all 0.3s ease; */
+    }
+
+    filter-btn:hover {
+      cursor: pointer;
+      /* transform: scale(1.1); */
+    }
+
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+   <script>
+     var app = angular.module('myApp', []);
+     app.controller('myCtrl', function($scope, $http) {
+       $http.get('/pcquerydisplay')
+         .then(function(response) {
+           $scope.users = response.data;
+         });
+     });
+   </script>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+  <li><a href="/pcdisplayquery"><span class="fa fa-question"></span>View Queries</a></li>
+  <li><a href="/pcverify"><span class="fa fa-file-text"></span>Verify Students</a></li>
+  <li><a href="/pcreport"><span class="fa fa-users"></span>Student Report</a></li>
+  <li><a href="/pcaddstudent"><span class="fa fa-user-plus"></span>Add Students</a></li>
+  <li><a href="/filterquery"><span class="fa fa-user-plus"></span>Filter Student Data</a></li>
+  <li><a href="/pclogout"><span class="fa fa-sign-out"></span>Logout</a></li>
+</ul>
+
+<div class="filter-options">
+<label for="branch">Branch:</label>
+<select id="branch">
+  <option value="null">All</option>
+  <option value="CSE">CSE</option>
+  <option value="ECE">ECE</option>
+  <option value="MECH">MECH</option>
+  <option value="EEE">EEE</option>
+  <option value="CIVIL">CIVIL</option>
+  <option value="PE">PE</option>
+  <option value="CHE">CHE</option>
+</select>
+
+<label for="gender">Gender:</label>
+<select id="gender">
+  <option value="null">All</option>
+  <option value="Male">Male</option>
+  <option value="Female">Female</option>
+</select>
+
+<label for="course">Course:</label>
+<select id="course">
+  <option value="null">All</option>
+  <option value="B.Tech">B.Tech</option>
+  <option value="M.Tech">M.Tech</option>
+</select>
+<label for="cgpa">CGPA:</label>
+<input type="text" name="cgpa" id="cgpa">
+</div>
+<!-- <button class="filter-btn" onclick="myfun();">Filter</button> -->
+<button id="filter-btn" onclick="myfun();" style="cursor: pointer;" onmouseover="this.style.transform = 'scale(1.1)'" onmouseout="this.style.transform = 'scale(1)'">Filter</button>
+<!-- <button id="download-btn" onclick="download();">Download</button> -->
+<button id="filter-btn" onclick="download();" style="cursor: pointer;" onmouseover="this.style.transform = 'scale(1.1)'" onmouseout="this.style.transform = 'scale(1)'">Download</button>
+<table id="student-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Branch</th>
+      <th>Course</th>
+      <th>CGPA</th>
+    </tr>
+  </thead>
+  <tbody id="demo">
+    <!-- Student data will be populated here -->
+  </tbody>
+</table>
+<script>
+    var temp;
+    function myfun(){
+    
+    var cgpa=document.getElementById("cgpa").value;
+    var gender=document.getElementById("gender").value;
+    var course=document.getElementById("course").value;
+    var branch=document.getElementById("branch").value;
+ 
+    console.log(cgpa,gender,course,branch);
+            fetch("/filter/"+ branch + "/" +gender + "/" + course + "/" + cgpa +"/").then(function (data) {
+                data.json().then(function (temp1) {
+                    console.log(temp1);
+                    temp=temp1;
+                    let placeholder = document.querySelector("#demo");
+                    let text = ""
+                    for (let i = 0; i < temp1.length; i++) {
+                       
+                            text += "<tr>";
+                            text = text + "<td>" + "      " + temp1[i].username + "</td>";
+                            text = text + "<td>" + temp1[i].email + "</td>";
+                            text = text + "<td>" + temp1[i].branch + "</td>";
+                            text = text + "<td>" + temp1[i].course + "</td>";
+                            text = text + "<td>" + temp1[i].cgpa + "</td>";
+                          
+
+                            text += "</tr>"
+                    }
+                    placeholder.innerHTML = text;
+   });
+});
+    }
+
+
+  function downloadFile(data, filename, type) {
+  // Create an <a> element to act as the download link
+    var downloadLink = document.createElement('a');
+    
+    // Set the data and file name for the download
+    downloadLink.href = URL.createObjectURL(new Blob([data], { type: type }));
+    downloadLink.download = filename;
+    
+    // Append the download link to the document body
+    document.body.appendChild(downloadLink);
+    
+    // Trigger the download by clicking the link
+    downloadLink.click();
+    
+    // Remove the download link from the document body
+    document.body.removeChild(downloadLink);
+  }
+
+function download() {
+  if (temp && temp.length) {
+
+    const dataToDownload = temp.map(({ name, gender, course, email, cgpa }) => ({ name, gender, course, email, cgpa }));
+    
+    const csv = Papa.unparse(dataToDownload);
+
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'student_data.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+  } else {
+    console.log("No data to download");
+  }
+}
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" integrity="sha512-5JQ1fZO6U5ZQ1RHgNifCnA11SIVJHngy/NO9y4/RS4Y4tw4l1D0xHJz1wZjLxx3zC0jcJ5ys5MNzwghyU/+2Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+</body>
+</html>

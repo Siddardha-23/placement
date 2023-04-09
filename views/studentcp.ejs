@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Change Password</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="custom.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+  <li><a href="/viewnotifications"><span class="fa fa-envelope"></span>View Notifications</a></li>
+  <li><a href="/viewstudentprofile"><span class="fa fa-user"></span>View Profile</a></li>
+  <li><a href="/editstudentprofile"><span class="fa fa-pencil"></span>Edit Profile</a></li>
+  <li><a href="/studentcp"><span class="fa fa-key"></span>Change Password</a></li>
+  <li><a href="/studentaq"><span class="fa fa-plus"></span>Add Query</a></li>
+  <li><a href="/queryresponse"><span class="fa fa-reply"></span>Query Response</a></li>
+  <li><a href="/selectedstudents"><span class="fa fa-check-circle"></span>View Selected Students</a></li>
+  <li><a href="/viewcompanies"><span class="fa fa-building"></span>View Company Details</a></li>
+  <li><a href="/logout"><span class="fa fa-sign-out"></span>Logout</a></li>
+  </ul>
+<!-- partial -->
+  
+
+  <main class="container" style="min-width: 380px;min-height: 20vh;">
+        <h2>Change Password</h2>
+        <% if (errorMessage) { %>
+            <p style="color: red"><%= errorMessage %></p>
+          <% } %>
+          <% if (updateMessage) { %>
+            <p style="color: green"><%= updateMessage %></p>
+          <% } %>
+        <form action="/changepassword" method="post">
+            <div class="input-field">
+                <input type="text" name="newpassword" id="newpassword"
+                    placeholder="Enter New Password" minlength="8" required>
+                <div class="underline"></div>
+            </div>
+            
+            <input type="submit" value="Change Password">
+        </form>
+
+       
+    </main>
+</body>
+</html>

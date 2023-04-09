@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Add Coordinator</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'><link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="custom.css">
+  <style type="text/css">
+    form .input-field:first-child {
+    margin-bottom: 0rem;
+}
+.input-field {
+        margin-top:20px;
+    }
+    .input-field input{
+        margin-top: 2px ;
+    }
+    select{
+border: 1px solid lightgray;
+   min-height: 5vh;
+   border-radius: 5px;
+
+   outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+  
+  </style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="side-menu">
+    <li><a href="/tpodisplayquery"><span class="fa fa-question"></span>View Queries</a></li>
+    <li><a href="/tpodocuments"><span class="fa fa-file-text"></span>View Student Documents</a></li>
+    <li><a href="/tpoaddnotification"><span class="fa fa-paper-plane"></span>Send Notifications</a></li>
+    <li><a href="tpoaddselected"><span class="fa fa-user-plus"></span>Add Selected Student</a></li>
+    <li><a href="/tpoaddpc"><span class="fa fa-users"></span>Add Coordinator</a></li>
+    <li><a href="/tpoaddcompany"><span class="fa fa-university"></span>Add Company details</a></li>
+    <li><a href="/tpodisplaycompany"><span class="fa fa-building"></span>View Company Details</a></li>
+    <li><a href="/tpologout"><span class="fa fa-sign-out"></span>Logout</a></li>
+    </ul>
+<!-- partial -->
+  
+
+  <main class="container" style="min-width: 380px;min-height: 30vh;">
+        <h2 style="margin-bottom: 0rem;">Add Coordinator</h2>
+        <% if (message) { %>
+            <p style="color: green"><%= message %></p>
+          <% } %>
+        <form action="" method="post">
+            <div class="input-field">
+                <input type="text" name="name" id="name"
+                    placeholder="Enter name" minlength="1" required>
+                <div class="underline"></div>
+            </div>
+            <div class="input-field">
+                <input type="number" name="phone" id="phone"
+                    placeholder="Enter phone number" minlength="10" required>
+                <div class="underline"></div>
+            </div>
+            <div class="input-field">
+                <input type="email" name="email" id="email"
+                    placeholder="Enter email" minlength="1" required>
+                <div class="underline"></div>
+            </div>
+            <div class="input-field">
+                <input type="password" name="password" id="password"
+                    placeholder="Enter password for this account" minlength="8" required>
+                <div class="underline"></div>
+            </div>
+            
+            <div class="input-field" style="margin-top:20px;">
+             <label for="branch">Select a department:</label><br>
+<select id="branch" name="branch" required>
+  <option value="" disabled selected>-- Select branch --</option>
+  <option value="CSE">Computer Science and Engineering (CSE)</option>
+  <option value="ECE">Electronics and Communication Engineering (ECE)</option>
+  <option value="EEE">Electrical and Electronics Engineering (EEE)</option>
+  <option value="MECH">Mechanical Engineering (MECH)</option>
+  <option value="CIVIL">Civil Engineering (CIVIL)</option>
+  <option value="PET">Petroleum Engineering (PET)</option>
+  <option value="CHEM">Petrochemical Engineering (CHEM)</option>
+</select>
+
+</div>
+            
+            
+            <input type="submit" value="Add Coordinator" style="margin-top:20px;">
+        </form>
+
+       
+    </main>
+</body>
+</html>
